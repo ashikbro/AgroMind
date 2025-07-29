@@ -1,0 +1,21 @@
+{
+  "modelName": "yield_prediction_model",
+  "version": "1.0.0",
+  "description": "Crop yield prediction using deep neural network",
+  "inputFeatures": [
+    "soil_moisture",
+    "temperature",
+    "humidity",
+    "rainfall",
+    "soil_ph",
+    "nitrogen_level",
+    "phosphorus_level",
+    "potassium_level",
+    "crop_age",
+    "planting_density"
+  ],
+  "outputRange": [0, 100],
+  "accuracy": 0.87,
+  "trainingDate": "2024-12-01",
+  "modelPath": "./ai-models/yield_prediction"
+}

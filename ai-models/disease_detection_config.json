@@ -1,0 +1,19 @@
+{
+  "modelName": "disease_detection_model",
+  "version": "1.0.0",
+  "description": "Crop disease detection using convolutional neural network",
+  "inputShape": [224, 224, 3],
+  "outputClasses": [
+    "healthy",
+    "bacterial_blight",
+    "brown_spot",
+    "leaf_smut",
+    "rust",
+    "powdery_mildew",
+    "viral_mosaic",
+    "nutrient_deficiency"
+  ],
+  "accuracy": 0.94,
+  "trainingDate": "2024-12-01",
+  "modelPath": "./ai-models/disease_detection"
+}

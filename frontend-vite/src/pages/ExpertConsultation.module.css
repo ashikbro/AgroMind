@@ -1,0 +1,60 @@
+.expert-chat-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 24px;
+  background: #fff;
+}
+.expert-chat-title {
+  margin-bottom: 12px;
+}
+.expert-chat-online {
+  margin-bottom: 12px;
+}
+.expert-chat-messages {
+  height: 240px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 12px;
+  background: #fafafa;
+}
+.expert-chat-message {
+  margin-bottom: 8px;
+}
+.expert-chat-user {
+  font-weight: normal;
+  color: #333;
+}
+.expert-chat-user.you {
+  font-weight: bold;
+  color: #1976d2;
+}
+.expert-chat-text {
+  margin-left: 8px;
+}
+.expert-chat-time {
+  float: right;
+  font-size: 12px;
+  color: #888;
+}
+.expert-chat-input-row {
+  display: flex;
+  gap: 8px;
+}
+.expert-chat-input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+.expert-chat-send-btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}

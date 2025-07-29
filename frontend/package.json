@@ -1,0 +1,59 @@
+{
+  "name": "agromind-frontend",
+  "version": "1.0.0",
+  "description": "AgroMind AI Farming Assistant Frontend",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "keywords": [
+    "agriculture",
+    "ai",
+    "farming",
+    "crop-disease",
+    "react"
+  ],
+  "author": "AgroMind Team",
+  "license": "MIT",
+  "dependencies": {
+    "@apollo/client": "^3.13.8",
+    "@heroicons/react": "^2.0.18",
+    "autoprefixer": "^10.4.15",
+    "axios": "^1.5.0",
+    "date-fns": "^2.30.0",
+    "framer-motion": "^12.23.11",
+    "graphql": "^16.11.0",
+    "postcss": "^8.4.29",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
+    "react-hook-form": "^7.45.4",
+    "react-hot-toast": "^2.4.1",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^6.15.0",
+    "react-scripts": "^5.0.1",
+    "recharts": "^2.15.4",
+    "socket.io-client": "^4.7.2",
+    "tailwindcss": "^4.1.11"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.22",
+    "@types/react-dom": "^18.2.7"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://localhost:5000"
+}
