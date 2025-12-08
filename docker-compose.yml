@@ -1,5 +1,9 @@
 version: '3.8'
 
+# IMPORTANT: Before running docker-compose up, set the JWT_SECRET environment variable:
+# export JWT_SECRET="your-super-secure-random-secret-minimum-32-characters"
+# Or create a .env file in the same directory with: JWT_SECRET=your-secret-here
+
 services:
   # MongoDB Database
   mongodb:
@@ -41,7 +45,7 @@ services:
       - PORT=5000
       - MONGODB_URI=mongodb://admin:admin123@mongodb:27017/agromind?authSource=admin
       - REDIS_URL=redis://redis:6379
-      - JWT_SECRET=${JWT_SECRET:-change-this-secret-in-production}
+      - JWT_SECRET=${JWT_SECRET}
       - FRONTEND_URL=http://localhost:3000
     ports:
       - "5000:5000"

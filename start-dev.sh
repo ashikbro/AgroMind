@@ -51,11 +51,14 @@ check_port() {
 
 # Check if MongoDB is running
 echo "Checking MongoDB..."
-if pgrep -x "mongod" > /dev/null; then
-    echo -e "${GREEN}✓ MongoDB is running${NC}"
+MONGODB_URI=$(grep MONGODB_URI backend/.env 2>/dev/null | cut -d '=' -f2)
+if [[ "$MONGODB_URI" == *"mongodb+srv"* ]] || [[ "$MONGODB_URI" == *"@"* ]]; then
+    echo -e "${GREEN}✓ Using remote/cloud MongoDB${NC}"
+elif pgrep -x "mongod" > /dev/null; then
+    echo -e "${GREEN}✓ Local MongoDB is running${NC}"
 else
-    echo -e "${YELLOW}⚠ MongoDB is not running${NC}"
-    echo "Please start MongoDB manually or use MongoDB Atlas"
+    echo -e "${YELLOW}⚠ Local MongoDB is not running${NC}"
+    echo "Make sure MongoDB is running or configure MongoDB Atlas in backend/.env"
     echo ""
 fi
 
@@ -111,7 +114,8 @@ sleep 3
 # Start frontend
 echo "Starting frontend server..."
 cd frontend
-BROWSER=none npm start > ../logs/frontend.log 2>&1 &
+export BROWSER=none
+npm start > ../logs/frontend.log 2>&1 &
 FRONTEND_PID=$!
 cd ..
 echo -e "${GREEN}✓ Frontend started (PID: $FRONTEND_PID)${NC}"
