@@ -1,0 +1,67 @@
+name: Dependency Updates
+
+on:
+  schedule:
+    # Run weekly on Monday at 9 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  update-dependencies:
+    name: Check for Dependency Updates
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        directory: [backend, frontend]
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+    
+    - name: Check for outdated packages
+      working-directory: ./${{ matrix.directory }}
+      run: |
+        npm outdated || true
+        npm outdated --json > outdated-${{ matrix.directory }}.json || true
+    
+    - name: Upload outdated packages report
+      uses: actions/upload-artifact@v3
+      with:
+        name: outdated-packages-${{ matrix.directory }}
+        path: ${{ matrix.directory }}/outdated-${{ matrix.directory }}.json
+
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        directory: [backend, frontend]
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+    
+    - name: Install dependencies
+      working-directory: ./${{ matrix.directory }}
+      run: npm ci
+    
+    - name: Run security audit
+      working-directory: ./${{ matrix.directory }}
+      run: |
+        npm audit --audit-level=moderate --json > audit-${{ matrix.directory }}.json || true
+    
+    - name: Upload audit report
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-audit-${{ matrix.directory }}
+        path: ${{ matrix.directory }}/audit-${{ matrix.directory }}.json
