@@ -1,6 +1,21 @@
 # 🌾 AgroMind - Complete AI-Powered Agricultural Platform
 
 ![AgroMind Logo](https://img.shields.io/badge/AgroMind-v1.0-green?style=for-the-badge&logo=leaf)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
+[![Code of Conduct](https://img.shields.io/badge/Code%20of%20Conduct-v1.0-ff69b4.svg)](./CODE_OF_CONDUCT.md)
+
+## 📚 Documentation
+
+- 📖 [Setup Guide](./SETUP.md) - Detailed installation instructions
+- 🚀 [Deployment Guide](./DEPLOYMENT_GUIDE.md) - Production deployment
+- 📋 [API Documentation](./API_DOCUMENTATION.md) - Complete API reference
+- 🤝 [Contributing](./CONTRIBUTING.md) - How to contribute
+- ❓ [FAQ](./FAQ.md) - Frequently asked questions
+- 🗺️ [Roadmap](./ROADMAP.md) - Future plans
+- 🔒 [Security](./SECURITY.md) - Security policy
+- 📝 [Changelog](./CHANGELOG.md) - Version history
+- 🐛 [Troubleshooting](./TROUBLESHOOTING.md) - Common issues
 
 ## 🚀 Quick Start Guide
 
