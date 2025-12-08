@@ -9,11 +9,17 @@ on:
     # Run weekly security scans
     - cron: '0 0 * * 0'
 
+permissions:
+  contents: read
+
 jobs:
   dependency-review:
     name: Dependency Review
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
+    
+    permissions:
+      contents: read
     
     steps:
     - uses: actions/checkout@v3
@@ -24,6 +30,9 @@ jobs:
   npm-audit:
     name: NPM Audit
     runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
     
     strategy:
       matrix:
@@ -80,6 +89,9 @@ jobs:
   secret-scanning:
     name: Secret Scanning
     runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
     
     steps:
     - uses: actions/checkout@v3
