@@ -1,272 +1,181 @@
-# 🌾 AgroMind - Complete AI-Powered Agricultural Platform
+# 🌾 AgroMind — AI-Powered Agriculture Intelligence Platform
 
-![AgroMind Logo](https://img.shields.io/badge/AgroMind-v1.0-green?style=for-the-badge&logo=leaf)
+AgroMind is a full-stack agriculture technology platform focused on helping farmers improve productivity, reduce crop loss, and optimize inputs using practical AI-driven decision support.
 
-## 🚀 Quick Start Guide
+## Problem Statement
 
-### **Method 1: One-Click Start (Recommended)**
-1. **Double-click** `START-AGROMIND.bat` in the root folder
-2. Choose option 3 to start both backend and frontend
-3. Wait for both servers to initialize
-4. Open http://localhost:3000 in your browser
+Farmers face recurring challenges that directly impact yield and profitability:
+- Late disease detection and delayed treatment
+- Uncertain yield planning due to weather variability
+- Inefficient fertilizer, irrigation, and labor allocation
+- Fragmented market/weather/agronomy information
 
-### **Method 2: Manual Start**
-1. **Backend**: Run `backend/RUN-BACKEND.bat`
-2. **Frontend**: Run `frontend/RUN-FRONTEND.bat` 
-3. Access the platform at http://localhost:3000
+AgroMind addresses these gaps with a unified web platform that combines crop intelligence, prediction models, and actionable recommendations.
 
-## 🌟 Platform Overview
+## Solution Overview
 
-AgroMind is a comprehensive agricultural technology platform that combines cutting-edge AI, real-time analytics, and sustainable farming practices to revolutionize modern agriculture.
+AgroMind delivers a modern end-to-end workflow:
+1. Capture farm/crop context and field observations
+2. Analyze disease risk and likely crop issues from uploaded images + symptoms
+3. Forecast yield and monitor seasonal trends
+4. Integrate weather and market insights
+5. Provide farmer guidance for treatment, prevention, and resource planning
 
-### 🔬 AI Disease Diagnosis
-- **Instant Analysis**: Upload crop images for immediate AI-powered disease detection
-- **High Accuracy**: Advanced machine learning models trained on agricultural datasets
-- **Treatment Recommendations**: Get specific treatment plans and prevention strategies
-- **Multi-crop Support**: Works with various crop types including cereals, vegetables, and fruits
+## Key Features
 
-### 🌤️ Weather Dashboard
-- **Real-time Weather**: Current conditions and detailed forecasts
-- **Agricultural Alerts**: Weather warnings specific to farming activities
-- **Best Timing**: Recommendations for planting, watering, and harvesting
-- **Soil Conditions**: Moisture and temperature insights for better decision making
+- **Crop Monitoring**: Crop and farm profile management with health tracking
+- **Yield Prediction**: AI-assisted estimates for planning harvest and inputs
+- **Disease Detection**: Image + symptom-based diagnosis with confidence scoring
+- **Resource Optimization**: Recommendations for irrigation, treatment, and operations
+- **Weather Integration**: Forecast-aware planning support and advisories
+- **Farmer Guidance**: Actionable treatment/prevention and follow-up workflows
 
-### 📅 Crop Calendar
-- **Activity Planning**: Schedule sowing, watering, fertilizing, and harvesting
-- **Smart Reminders**: Automated notifications for important farming tasks
-- **Seasonal Recommendations**: Month-wise farming tips and best practices
-- **Progress Tracking**: Monitor completed and upcoming activities
+## Tech Stack
 
-### 💰 Market Price Tracker
-- **Real-time Prices**: Current market rates across major agricultural markets
-- **Price Trends**: Historical data and trend analysis for better selling decisions
-- **Price Alerts**: Set custom alerts for target prices
-- **Market Intelligence**: Best selling times and quality premium insights
+### Backend
+- Node.js + Express
+- MongoDB + Mongoose
+- GraphQL (Apollo)
+- TensorFlow.js (AI integration), ML utilities
+- JWT authentication, Multer uploads
 
-### 🌾 Crop Database
-- **Comprehensive Information**: Detailed crop profiles with growing requirements
-- **Disease Encyclopedia**: Common diseases, symptoms, and treatments
-- **Variety Selection**: Different crop varieties and their characteristics
-- **Growing Guides**: Step-by-step cultivation instructions
+### Frontend
+- React (CRA app in `frontend/`)
+- Tailwind CSS
+- React Router, Apollo Client
 
-### 👤 User Management
-- **Farmer Profiles**: Personalized dashboards with farm-specific information
-- **Multi-language Support**: Interface available in 12+ Indian languages
-- **Farm Details**: Location, soil type, irrigation, and size management
-- **Subscription Plans**: Free, basic, and premium tiers with different features
+### Alternative Frontend Workspace
+- Vite + React + TypeScript workspace in `frontend-vite/`
 
-## Quick Start
+## Installation & Setup
 
-### 1. Install Backend Dependencies
+### Prerequisites
+- Node.js 18+
+- npm 9+
+- MongoDB (local or hosted)
+
+### 1) Clone and install dependencies
 ```bash
-cd backend
+git clone https://github.com/ashikbro/AgroMind.git
+cd AgroMind
+
+# Root (shared deps/tools)
 npm install
+
+# Backend
+cd backend && npm install
+
+# Frontend
+cd ../frontend && npm install
 ```
 
-### 2. Install Frontend Dependencies
+### 2) Configure environment
+Copy the root env template and backend template:
 ```bash
-cd frontend
-npm install
+cp .env.example .env
+cp backend/.env.example backend/.env
 ```
 
-### 3. Setup Environment Variables
-Create a `.env` file in the backend directory:
-```env
-PORT=5000
-MONGODB_URI=mongodb://localhost:27017/agromind
-JWT_SECRET=your-super-secret-jwt-key-here
-NODE_ENV=development
-UPLOAD_DIR=uploads
-```
-
-### 4. Start MongoDB
-Make sure MongoDB is running on your system.
-
-### 5. Start the Application
+### 3) Start services
 ```bash
-# Terminal 1 - Start Backend
+# Terminal 1
 cd backend
 npm run dev
 
-# Terminal 2 - Start Frontend
+# Terminal 2
 cd frontend
 npm start
 ```
 
-The application will be available at:
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:5000
+## Quick Start Guide
 
-## Project Structure
+1. Register/login as a farmer
+2. Add farm and crop details
+3. Upload crop image(s) in disease analysis
+4. Review diagnosis confidence + recommendation plan
+5. Track diagnosis history and follow-up updates
+6. Use weather/market signals for planning input timing
 
-```
-AgroMind/
-├── backend/
-│   ├── src/
-│   │   ├── models/          # Database models
-│   │   ├── controllers/     # API controllers
-│   │   ├── routes/          # Express routes
-│   │   ├── middleware/      # Custom middleware
-│   │   ├── utils/           # Utility functions
-│   │   └── app.js          # Express app setup
-│   ├── package.json
-│   └── server.js           # Entry point
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/     # React components
-│   │   ├── pages/          # Page components
-│   │   ├── context/        # React context
-│   │   ├── services/       # API services
-│   │   └── App.js         # Main app component
-│   ├── package.json
-│   └── public/
-│
-└── README.md
-```
+## How It Works (End-to-End)
 
-## Features
+1. **Data Intake**: User submits crop context, image(s), and optional symptoms
+2. **Image Processing**: Backend optimizes image payloads for analysis
+3. **AI Inference**: Model pipeline generates ranked disease predictions
+4. **Decision Layer**: Confidence + severity generate treatment/prevention guidance
+5. **Persistence**: Diagnosis and follow-up are stored in MongoDB
+6. **Insights**: Analytics endpoints expose trend and status summaries
 
-### Core Features
-- **User Authentication**: JWT-based secure authentication
-- **Crop Disease Detection**: AI-powered image analysis for disease identification
-- **Crop Database**: Comprehensive crop information and management
-- **Farm Profile Management**: Detailed farm and farmer profiles
-- **Dashboard Analytics**: Visual insights and recommendations
+## API Documentation
 
-### Technical Features
-- **Backend**: Node.js, Express.js, MongoDB, JWT Authentication
-- **Frontend**: React.js, TailwindCSS, React Router
-- **File Upload**: Multer with image processing
-- **Real-time**: Socket.io integration ready
-- **Responsive Design**: Mobile-first approach
+- Full API reference: [`docs/API.md`](docs/API.md)
+- Data contract and quality expectations: [`docs/DATA_REQUIREMENTS.md`](docs/DATA_REQUIREMENTS.md)
 
-## API Endpoints
+Quick endpoint highlights:
+- `POST /api/ai/analyze-disease`
+- `GET /api/ai/diagnosis/:id`
+- `GET /api/ai/diagnosis-history`
+- `POST /api/ai/diagnosis/:id/follow-up`
+- `GET /api/ai/analytics`
 
-### Authentication
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User login
-- `GET /api/auth/profile` - Get user profile
-- `PUT /api/auth/profile` - Update user profile
+## Usage Examples (Farming Scenarios)
 
-### Crops
-- `GET /api/crops` - Get all crops
-- `GET /api/crops/:id` - Get specific crop
-- `POST /api/crops` - Create new crop (admin)
-- `PUT /api/crops/:id` - Update crop (admin)
+- **Scenario 1: Early Leaf Spot Alert**
+  - Upload affected leaf image + symptom notes
+  - Receive confidence-scored diagnosis and immediate action list
 
-### Diseases
-- `GET /api/diseases` - Get all diseases
-- `GET /api/diseases/:id` - Get specific disease
-- `POST /api/diseases/diagnose` - AI disease diagnosis
+- **Scenario 2: Monsoon Resource Planning**
+  - Monitor weather + crop stage
+  - Optimize irrigation schedule and disease prevention timing
 
-### Analytics
-- `GET /api/analytics/dashboard` - Dashboard statistics
-- `GET /api/analytics/reports` - Generate reports
+- **Scenario 3: Mid-Season Yield Adjustment**
+  - Compare crop health trend and environmental factors
+  - Update expected yield and operational plan
 
-## Default Users
+Detailed walkthroughs are available in:
+- [`examples/workflows/smallholder-vegetable-farm.md`](examples/workflows/smallholder-vegetable-farm.md)
+- [`docs/AGRICULTURE_GUIDE.md`](docs/AGRICULTURE_GUIDE.md)
 
-The system will create default users on first run:
+## Data Requirements
 
-### Admin User
-- Email: admin@agromind.com
-- Password: admin123
-- Role: admin
+See [`docs/DATA_REQUIREMENTS.md`](docs/DATA_REQUIREMENTS.md) for:
+- Required agronomic fields
+- Image quality requirements for diagnosis
+- Optional weather/soil/market enrichment data
+- Validation and data quality checks
 
-### Test Farmer
-- Email: farmer@example.com
-- Password: farmer123
-- Role: farmer
+Sample payloads:
+- [`examples/sample-data/disease-analysis-request.json`](examples/sample-data/disease-analysis-request.json)
+- [`examples/sample-data/farm-profile.json`](examples/sample-data/farm-profile.json)
 
-## Development
+## Model Accuracy & Performance
 
-### Backend Development
-```bash
-cd backend
-npm run dev    # Start with nodemon
-npm run start  # Start in production mode
-```
+Current platform metrics (project baseline targets):
+- Disease detection confidence output: ranked top-3 prediction flow
+- Reference quality target: **90%+ top-1 accuracy** on curated disease image sets
+- Typical diagnosis response target: **2–5 seconds** per request (environment-dependent)
 
-### Frontend Development
-```bash
-cd frontend
-npm start      # Start development server
-npm run build  # Build for production
-```
+> Note: Exact performance depends on dataset quality, hardware, and model version. Track model updates in `CHANGELOG.md`.
 
-### Adding New Features
+## Roadmap
 
-1. **Backend API Endpoint**:
-   - Add route in `backend/src/routes/`
-   - Create controller in `backend/src/controllers/`
-   - Add validation middleware if needed
+- [ ] Integrate production-grade trained disease models per crop family
+- [ ] Add explainable AI overlays (symptom regions and confidence rationale)
+- [ ] Expand IoT ingestion (soil moisture, EC, pH, weather station sync)
+- [ ] Add multilingual agronomy recommendations with regional calendars
+- [ ] Introduce MLOps evaluation + model drift monitoring
 
-2. **Frontend Component**:
-   - Create component in `frontend/src/components/`
-   - Add page in `frontend/src/pages/`
-   - Update routing in `App.js`
+## Contributing Guidelines
 
-3. **Database Model**:
-   - Add model in `backend/src/models/`
-   - Update controllers to use new model
+Please review [`CONTRIBUTING.md`](CONTRIBUTING.md) before opening issues or pull requests.
 
-## Troubleshooting
+## Additional Documentation
 
-### Common Issues
-
-1. **MongoDB Connection Error**:
-   - Ensure MongoDB is running: `mongod`
-   - Check connection string in `.env`
-
-2. **Port Already in Use**:
-   - Change PORT in `.env` file
-   - Kill process: `npx kill-port 5000`
-
-3. **CORS Issues**:
-   - Frontend must run on http://localhost:3000
-   - Backend configured for this URL
-
-4. **Package Dependencies**:
-   - Delete `node_modules` and `package-lock.json`
-   - Run `npm install` again
-
-### Database Seeding
-
-The application will automatically seed the database with:
-- Sample crop data
-- Common disease information
-- Default user accounts
-
-## Deployment
-
-### Backend Deployment
-1. Set environment variables
-2. Install dependencies: `npm install`
-3. Start application: `npm start`
-
-### Frontend Deployment
-1. Build application: `npm run build`
-2. Serve static files from `build/` directory
-
-### Environment Variables for Production
-```env
-PORT=5000
-MONGODB_URI=mongodb://your-mongo-url/agromind
-JWT_SECRET=your-super-secure-production-secret
-NODE_ENV=production
-UPLOAD_DIR=uploads
-```
+- [`docs/AGRICULTURE_GUIDE.md`](docs/AGRICULTURE_GUIDE.md)
+- [`docs/API.md`](docs/API.md)
+- [`docs/DATA_REQUIREMENTS.md`](docs/DATA_REQUIREMENTS.md)
+- [`DEPLOYMENT_GUIDE.md`](DEPLOYMENT_GUIDE.md)
+- [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md)
 
 ## License
 
-This project is licensed under the MIT License.
-
-## Support
-
-For support and questions:
-- Create an issue in the repository
-- Contact the development team
-
----
-
-**Happy Farming with AgroMind! 🌱**
+This project is licensed under the MIT License. See [`LICENSE.md`](LICENSE.md).

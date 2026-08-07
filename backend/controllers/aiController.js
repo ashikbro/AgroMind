@@ -5,8 +5,29 @@ const sharp = require('sharp');
 const path = require('path');
 const fs = require('fs').promises;
 
-// Simulated AI model for disease detection
-// In production, this would integrate with TensorFlow.js, PyTorch, or external AI service
+/**
+ * @typedef {Object} DiagnosisPrediction
+ * @property {string} diseaseName
+ * @property {number} confidence
+ * @property {'low'|'moderate'|'high'} severity
+ */
+
+/**
+ * Simulated AI model for disease detection.
+ * In production, this would integrate with TensorFlow.js, PyTorch, or an external AI service.
+ *
+ * @param {string} imagePath
+ * @param {string} [cropType]
+ * @param {string} [symptoms]
+ * @returns {Promise<{
+ *   predictions: DiagnosisPrediction[],
+ *   primaryDiagnosis: { disease: string, confidence: number },
+ *   treatmentRecommendations: Record<string, unknown>,
+ *   modelVersion: string,
+ *   processingTime: number,
+ *   analysisMetadata: Record<string, unknown>
+ * }>}
+ */
 const simulateAIAnalysis = async (imagePath, cropType, symptoms) => {
   // Simulate processing delay
   await new Promise(resolve => setTimeout(resolve, 2000));
@@ -72,7 +93,13 @@ const simulateAIAnalysis = async (imagePath, cropType, symptoms) => {
   };
 };
 
-// Process and optimize image
+/**
+ * Process and optimize an uploaded crop image for diagnosis.
+ *
+ * @param {string} inputPath
+ * @param {string} outputPath
+ * @returns {Promise<string>}
+ */
 const processImage = async (inputPath, outputPath) => {
   try {
     await sharp(inputPath)
@@ -90,10 +117,24 @@ const processImage = async (inputPath, outputPath) => {
   }
 };
 
-// Analyze crop disease from image
+/**
+ * Analyze crop disease from uploaded images and return a diagnosis report.
+ *
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @returns {Promise<void>}
+ */
 const analyzeCropDisease = async (req, res) => {
   try {
     const { cropType, symptoms } = req.body;
+    if (!req.user?._id) {
+      res.status(401).json({
+        success: false,
+        message: 'Unauthorized user'
+      });
+      return;
+    }
+
     const userId = req.user._id;
 
     if (!req.files || req.files.length === 0) {
@@ -140,10 +181,10 @@ const analyzeCropDisease = async (req, res) => {
     const aiAnalysis = await simulateAIAnalysis(req.files[0].path, cropType, symptoms);
     diagnosis.aiAnalysis = aiAnalysis;
 
-    // Set initial status based on confidence
-    if (aiAnalysis.primaryDiagnosis.confidence > 0.85) {
+    // Confidence is stored as an integer percentage (0-100).
+    if (aiAnalysis.primaryDiagnosis.confidence > 85) {
       diagnosis.status = 'diagnosed';
-    } else if (aiAnalysis.primaryDiagnosis.confidence > 0.6) {
+    } else if (aiAnalysis.primaryDiagnosis.confidence > 60) {
       diagnosis.status = 'pending';
       diagnosis.priority = 'medium';
     } else {
@@ -177,7 +218,13 @@ const analyzeCropDisease = async (req, res) => {
   }
 };
 
-// Get diagnosis by ID
+/**
+ * Fetch a diagnosis by id for the authenticated farmer.
+ *
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @returns {Promise<void>}
+ */
 const getDiagnosis = async (req, res) => {
   try {
     const { id } = req.params;
@@ -216,7 +263,13 @@ const getDiagnosis = async (req, res) => {
   }
 };
 
-// Get user's diagnosis history
+/**
+ * Get paginated diagnosis history for the authenticated farmer.
+ *
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @returns {Promise<void>}
+ */
 const getDiagnosisHistory = async (req, res) => {
   try {
     const userId = req.user._id;
@@ -232,14 +285,17 @@ const getDiagnosisHistory = async (req, res) => {
       query.crop = crop;
     }
 
-    const skip = (page - 1) * parseInt(limit);
+    // Guard against invalid pagination values from query parameters.
+    const parsedPage = Math.max(Number.parseInt(page, 10) || 1, 1);
+    const parsedLimit = Math.min(Math.max(Number.parseInt(limit, 10) || 10, 1), 100);
+    const skip = (parsedPage - 1) * parsedLimit;
 
     const diagnoses = await Diagnosis.find(query)
       .populate('crop', 'name category')
       .populate('aiAnalysis.primaryDiagnosis.disease', 'name type')
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(parseInt(limit));
+      .limit(parsedLimit);
 
     const total = await Diagnosis.countDocuments(query);
 
@@ -248,10 +304,10 @@ const getDiagnosisHistory = async (req, res) => {
       data: {
         diagnoses,
         pagination: {
-          currentPage: parseInt(page),
-          totalPages: Math.ceil(total / limit),
+        currentPage: parsedPage,
+        totalPages: Math.ceil(total / parsedLimit),
           totalItems: total,
-          itemsPerPage: parseInt(limit)
+        itemsPerPage: parsedLimit
         }
       }
     });
@@ -266,7 +322,13 @@ const getDiagnosisHistory = async (req, res) => {
   }
 };
 
-// Add follow-up to diagnosis
+/**
+ * Add follow-up status and notes to an existing diagnosis.
+ *
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @returns {Promise<void>}
+ */
 const addFollowUp = async (req, res) => {
   try {
     const { id } = req.params;
@@ -332,7 +394,13 @@ const addFollowUp = async (req, res) => {
   }
 };
 
-// Get analysis statistics
+/**
+ * Return AI diagnosis analytics for the authenticated farmer.
+ *
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @returns {Promise<void>}
+ */
 const getAnalyticsData = async (req, res) => {
   try {
     const userId = req.user._id;
