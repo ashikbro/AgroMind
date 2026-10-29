@@ -58,10 +58,23 @@ const LoginPage = () => {
   };
 
   const handleDemoLogin = async (userType) => {
+    if (process.env.NODE_ENV === 'production') {
+      return;
+    }
     const demoCredentials = {
-      farmer: { email: 'farmer@agromind.com', password: 'farmer123' },
-      admin: { email: 'admin@agromind.com', password: 'admin123' }
+      farmer: {
+        email: process.env.REACT_APP_DEMO_FARMER_EMAIL,
+        password: process.env.REACT_APP_DEMO_FARMER_PASSWORD
+      },
+      admin: {
+        email: process.env.REACT_APP_DEMO_ADMIN_EMAIL,
+        password: process.env.REACT_APP_DEMO_ADMIN_PASSWORD
+      }
     };
+
+    if (!demoCredentials[userType].email || !demoCredentials[userType].password) {
+      return;
+    }
 
     const result = await login(demoCredentials[userType]);
     if (result.success) {

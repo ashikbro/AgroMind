@@ -74,9 +74,11 @@ Create a `.env` file in the backend directory:
 ```env
 PORT=5000
 MONGODB_URI=mongodb://localhost:27017/agromind
-JWT_SECRET=your-super-secret-jwt-key-here
+JWT_SECRET=replace-with-a-long-random-secret
 NODE_ENV=development
 UPLOAD_DIR=uploads
+SEED_ADMIN_PASSWORD=replace-with-a-development-password
+SEED_FARMER_PASSWORD=replace-with-a-development-password
 ```
 
 ### 4. Start MongoDB
@@ -168,15 +170,9 @@ AgroMind/
 
 The system will create default users on first run:
 
-### Admin User
-- Email: admin@agromind.com
-- Password: admin123
-- Role: admin
-
-### Test Farmer
-- Email: farmer@example.com
-- Password: farmer123
-- Role: farmer
+The seed script creates development-only accounts using the
+`SEED_ADMIN_PASSWORD` and `SEED_FARMER_PASSWORD` environment variables.
+Never run the seed script against a production database.
 
 ## Development
 

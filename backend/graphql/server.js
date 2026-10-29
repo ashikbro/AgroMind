@@ -10,6 +10,13 @@ const rateLimit = require('express-rate-limit');
 const compression = require('compression');
 const jwt = require('jsonwebtoken');
 
+const getJwtSecret = () => {
+  if (!process.env.JWT_SECRET) {
+    throw new Error('JWT_SECRET must be configured before authenticating requests');
+  }
+  return process.env.JWT_SECRET;
+};
+
 const { typeDefs } = require('./schema');
 const { resolvers } = require('./resolvers');
 const pubsub = require('../pubsub');
@@ -110,7 +117,7 @@ class GraphQLServer {
 
         if (token) {
           try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback_secret');
+            const decoded = jwt.verify(token, getJwtSecret());
             user = await this.getUserById(decoded.userId);
           } catch (error) {
             console.warn('Invalid token:', error.message);
@@ -177,7 +184,7 @@ class GraphQLServer {
 
           if (token) {
             try {
-              const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET || 'fallback_secret');
+              const decoded = jwt.verify(token.replace('Bearer ', ''), getJwtSecret());
               user = await this.getUserById(decoded.userId);
             } catch (error) {
               console.warn('Subscription auth failed:', error.message);
@@ -234,7 +241,7 @@ class GraphQLServer {
 
             if (token) {
               try {
-                const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET || 'fallback_secret');
+                const decoded = jwt.verify(token.replace('Bearer ', ''), getJwtSecret());
                 user = await this.getUserById(decoded.userId);
               } catch (error) {
                 console.warn('Subscription auth failed:', error.message);

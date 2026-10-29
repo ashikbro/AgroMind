@@ -314,10 +314,18 @@ const seedData = async () => {
     }
 
     // Create admin user
+    const adminPassword = process.env.SEED_ADMIN_PASSWORD;
+    const farmerPassword = process.env.SEED_FARMER_PASSWORD;
+    if (!adminPassword || !farmerPassword) {
+      throw new Error(
+        'SEED_ADMIN_PASSWORD and SEED_FARMER_PASSWORD must be configured before seeding users'
+      );
+    }
+
     const adminUser = new User({
       name: 'Admin User',
       email: 'admin@agromind.com',
-      password: 'admin123',
+      password: adminPassword,
       phone: '+919876543210',
       role: 'admin',
       isVerified: true,
@@ -333,7 +341,7 @@ const seedData = async () => {
     const farmerUser = new User({
       name: 'Rajesh Kumar',
       email: 'farmer@agromind.com',
-      password: 'farmer123',
+      password: farmerPassword,
       phone: '+919876543211',
       role: 'farmer',
       isVerified: true,
@@ -361,9 +369,7 @@ const seedData = async () => {
     console.log('👨‍🌾 Created sample farmer');
 
     console.log('✅ Data seeding completed successfully!');
-    console.log('\n📋 Sample Credentials:');
-    console.log('Admin: admin@agromind.com / admin123');
-    console.log('Farmer: farmer@agromind.com / farmer123');
+    console.log('\n📋 Seeded users are configured through SEED_ADMIN_PASSWORD and SEED_FARMER_PASSWORD.');
 
   } catch (error) {
     console.error('❌ Error seeding data:', error);
