@@ -4,6 +4,9 @@ const crypto = require('crypto');
 
 // Generate JWT token
 const generateToken = (userId) => {
+  if (!process.env.JWT_SECRET) {
+    throw new Error('JWT_SECRET must be configured before issuing tokens');
+  }
   return jwt.sign({ userId }, process.env.JWT_SECRET, {
     expiresIn: '30d'
   });
@@ -222,9 +225,9 @@ const forgotPassword = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: 'No user found with this email'
+      return res.json({
+        success: true,
+        message: 'If the account exists, a password reset link will be sent.'
       });
     }
 
@@ -240,12 +243,11 @@ const forgotPassword = async (req, res) => {
 
     await user.save();
 
-    // In production, send email with reset link
-    // For now, return the token (remove this in production)
+    // Send the reset link through a trusted delivery service in production.
+    // Never return the raw token in an API response.
     res.json({
       success: true,
-      message: 'Password reset token sent to email',
-      resetToken // Remove this in production
+      message: 'If the account exists, a password reset link will be sent.'
     });
 
   } catch (error) {
@@ -317,6 +319,7 @@ const logout = async (req, res) => {
 };
 
 module.exports = {
+  generateToken,
   register,
   login,
   getMe,

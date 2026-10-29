@@ -24,6 +24,9 @@ const analyticsRoutes = require('./routes/analytics');
 
 class AgroMindServer {
   constructor() {
+    if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
+      throw new Error('JWT_SECRET must be configured in production');
+    }
     this.app = express();
     this.graphqlServer = new GraphQLServer();
     this.redis = null;

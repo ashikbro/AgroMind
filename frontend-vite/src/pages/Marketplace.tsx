@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, Grid } from '@mui/material';
+import { Card, CardContent, Typography } from '@mui/material';
 import axios from 'axios';
 
 interface MarketplaceItem {
@@ -47,9 +47,9 @@ const Marketplace: React.FC = () => {
       {!loading && !error && paginatedItems.length === 0 && (
         <Typography>No marketplace items found.</Typography>
       )}
-      <Grid container spacing={2}>
+      <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
         {paginatedItems.map(item => (
-          <Grid item xs={12} sm={6} md={4} key={item.id}>
+          <div key={item.id}>
             <Card>
               <CardContent>
                 <img src={item.image} alt={item.title} style={{ width: '100%', height: 180, objectFit: 'cover' }} />
@@ -58,9 +58,9 @@ const Marketplace: React.FC = () => {
                 <Typography variant="body2">{item.description}</Typography>
               </CardContent>
             </Card>
-          </Grid>
+          </div>
         ))}
-      </Grid>
+      </div>
       <div className="flex justify-center mt-6">
         {Array.from({ length: totalPages }, (_, i) => (
           <button

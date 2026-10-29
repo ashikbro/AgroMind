@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, Grid } from '@mui/material';
+import { Card, CardContent, Typography } from '@mui/material';
 import axios from 'axios';
 
 interface CommunityPost {
@@ -46,9 +46,9 @@ const CommunityHub: React.FC = () => {
       {!loading && !error && paginatedPosts.length === 0 && (
         <Typography>No community posts found.</Typography>
       )}
-      <Grid container spacing={2}>
+      <div className="grid gap-4">
         {paginatedPosts.map(post => (
-          <Grid item xs={12} key={post.id}>
+          <div key={post.id}>
             <Card>
               <CardContent>
                 <Typography variant="subtitle2">{post.author}</Typography>
@@ -56,9 +56,9 @@ const CommunityHub: React.FC = () => {
                 <Typography variant="caption" color="textSecondary">{new Date(post.timestamp).toLocaleString()}</Typography>
               </CardContent>
             </Card>
-          </Grid>
+          </div>
         ))}
-      </Grid>
+      </div>
       <div className="flex justify-center mt-6">
         {Array.from({ length: totalPages }, (_, i) => (
           <button

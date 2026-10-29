@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, Grid } from '@mui/material';
+import { Card, CardContent, Typography } from '@mui/material';
 import axios from 'axios';
 
 interface Notification {
@@ -27,9 +27,9 @@ const NotificationCenter: React.FC = () => {
       <Typography variant="h4" gutterBottom>Notifications</Typography>
       {loading && <Typography>Loading...</Typography>}
       {error && <Typography color="error">{error}</Typography>}
-      <Grid container spacing={2}>
+      <div className="grid gap-4">
         {notifications.map(note => (
-          <Grid item xs={12} key={note.id}>
+          <div key={note.id}>
             <Card>
               <CardContent>
                 <Typography variant="subtitle2" color={note.read ? 'textSecondary' : 'primary'}>
@@ -39,9 +39,9 @@ const NotificationCenter: React.FC = () => {
                 <Typography variant="caption" color="textSecondary">{new Date(note.timestamp).toLocaleString()}</Typography>
               </CardContent>
             </Card>
-          </Grid>
+          </div>
         ))}
-      </Grid>
+      </div>
     </div>
   );
 };
