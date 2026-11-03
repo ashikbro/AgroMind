@@ -176,6 +176,22 @@ Never run the seed script against a production database.
 
 ## Development
 
+### Vite showcase
+
+The `frontend-vite` application includes the public AgroMind showcase:
+capability overview, farmer-first product positioning, and links into the
+planned application surfaces. It is built as a static site and can be
+deployed to GitHub Pages.
+
+```bash
+cd frontend-vite
+npm ci
+npm run dev
+```
+
+The GitHub Pages workflow builds `frontend-vite` and publishes its `dist`
+directory on every push to `main`.
+
 ### Backend Development
 ```bash
 cd backend
