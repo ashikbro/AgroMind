@@ -1,99 +1,46 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Dashboard from './pages/Dashboard';
-import DiagnosisPage from './pages/DiagnosisPage';
-import WeatherPage from './pages/WeatherPage';
-import FarmAnalytics from './pages/FarmAnalytics';
-import FinancialDashboard from './pages/FinancialDashboard';
-import SustainabilityDashboard from './pages/SustainabilityDashboard';
-import Marketplace from './pages/Marketplace';
-import CommunityHub from './pages/CommunityHub';
-import NotificationCenter from './pages/NotificationCenter';
-import UserProfile from './pages/UserProfile';
-import AdminDashboard from './pages/AdminDashboard';
-import ExpertConsultation from './pages/ExpertConsultation';
-import AIChatbot from './components/AIChatbot';
-import AuthContextProvider from './context/AuthContext';
-import AnalyticsContextProvider from './context/AnalyticsContext';
-// import { useAnalytics } from './context/useAnalytics'; // Use in components as needed
-// ...import other advanced pages/components as needed
+import './App.css'
 
-const App: React.FC = () => {
+const features = [
+  ['⌁', 'Crop health diagnosis', 'Upload a crop image and get an AI-assisted disease signal, treatment context, and prevention guidance.', '/diagnosis'],
+  ['☼', 'Weather intelligence', 'See conditions, forecasts, and agricultural alerts that help plan watering, planting, and harvest timing.', '/weather'],
+  ['◒', 'Farm analytics', 'Understand crop progress, sustainability signals, and operational trends through a single dashboard.', '/analytics'],
+  ['↗', 'Market signals', 'Track prices and trends across markets to make more informed decisions about when and where to sell.', '/marketplace'],
+  ['▦', 'Crop calendar', 'Keep sowing, watering, fertilizing, and harvest activities visible with seasonal reminders.', '/dashboard'],
+  ['♧', 'Farmer community', 'Share practical knowledge, connect with experts, and make better decisions together.', '/community'],
+]
+
+export default function App() {
   return (
-    <AuthContextProvider>
-      <AnalyticsContextProvider>
-        <Router>
-          <Navbar />
-          <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/diagnosis" element={<DiagnosisPage />} />
-          <Route path="/weather" element={<WeatherPage />} />
-          <Route path="/analytics" element={<FarmAnalytics />} />
-          <Route path="/financial-dashboard" element={<FinancialDashboard />} />
-          <Route path="/sustainability-dashboard" element={<SustainabilityDashboard />} />
-          <Route path="/marketplace" element={<Marketplace />} />
-          <Route path="/community" element={<CommunityHub />} />
-          <Route path="/notifications" element={<NotificationCenter />} />
-          <Route path="/profile" element={<UserProfile />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/expert" element={<ExpertConsultation />} />
-          <Route path="/chat" element={<ChatUI />} />
-          {/* Add more advanced routes here: search, chat, settings, etc. */}
-          </Routes>
-          <AIChatbot />
-        </Router>
-      </AnalyticsContextProvider>
-    </AuthContextProvider>
-  );
-};
-
-// Chat UI Component (refactored to use CSS module)
-import chatStyles from './components/ChatUI.module.css';
-const ChatUI: React.FC = () => {
-  const [messages, setMessages] = React.useState([
-    { id: 1, user: 'Alice', text: 'Hello!', time: '10:00' },
-    { id: 2, user: 'Bob', text: 'Hi Alice!', time: '10:01' },
-  ]);
-  const [input, setInput] = React.useState('');
-  const [onlineUsers] = React.useState(['Alice', 'Bob', 'Charlie']);
-
-  const handleSend = () => {
-    if (input.trim()) {
-      setMessages([...messages, { id: messages.length + 1, user: 'You', text: input, time: new Date().toLocaleTimeString() }]);
-      setInput('');
-    }
-  };
-
-  return (
-    <div className={chatStyles['chat-container']}>
-      <h2 className={chatStyles['chat-title']}>Expert Chat</h2>
-      <div className={chatStyles['chat-online']}>
-        <strong>Online:</strong> {onlineUsers.join(', ')}
-      </div>
-      <div className={chatStyles['chat-messages']}>
-        {messages.map(msg => (
-          <div key={msg.id} className={chatStyles['chat-message']}>
-            <span className={msg.user === 'You' ? `${chatStyles['chat-user']} ${chatStyles['you']}` : chatStyles['chat-user']}>
-              {msg.user}
-            </span>
-            <span className={chatStyles['chat-text']}>{msg.text}</span>
-            <span className={chatStyles['chat-time']}>{msg.time}</span>
-          </div>
-        ))}
-      </div>
-      <div className={chatStyles['chat-input-row']}>
-        <input
-          type="text"
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          placeholder="Type your message..."
-          className={chatStyles['chat-input']}
-        />
-        <button onClick={handleSend} className={chatStyles['chat-send-btn']}>Send</button>
-      </div>
+    <div className="agro-shell">
+      <header className="agro-hero">
+        <nav className="agro-nav">
+          <div className="agro-brand"><span className="agro-brand-mark">✦</span> AgroMind</div>
+          <div className="agro-nav-links"><a href="#features">Capabilities</a><a href="#how-it-works">How it works</a><a href="https://github.com/ashikbro/AgroMind">View source ↗</a></div>
+        </nav>
+        <div className="agro-hero-content">
+          <span className="agro-eyebrow">AI-assisted agriculture</span>
+          <h1>Better decisions for <em>healthier farms.</em></h1>
+          <p>AgroMind brings crop health, weather intelligence, farm analytics, and market signals into one calm workspace for modern farmers.</p>
+          <div className="agro-actions"><a className="agro-button primary" href="#features">Explore the platform ↓</a><a className="agro-button secondary" href="https://github.com/ashikbro/AgroMind">Read the project ↗</a></div>
+        </div>
+      </header>
+      <main className="agro-content">
+        <section className="agro-stats" aria-label="Platform highlights">
+          <div className="agro-stat"><strong>12+</strong><span>Supported languages</span></div>
+          <div className="agro-stat"><strong>24/7</strong><span>Farm monitoring mindset</span></div>
+          <div className="agro-stat"><strong>4</strong><span>Decision areas connected</span></div>
+          <div className="agro-stat"><strong>1</strong><span>Farmer-first workspace</span></div>
+        </section>
+        <section id="features">
+          <div className="agro-section-heading"><div><span className="agro-eyebrow">One connected view</span><h2>Everything your farm needs to move forward.</h2><p>Designed to turn scattered signals into practical next steps.</p></div><small>Built for clarity, not complexity</small></div>
+          <div className="agro-feature-grid">{features.map(([icon, title, description, href]) => <article className="agro-feature" key={title}><div className="agro-feature-icon">{icon}</div><h3>{title}</h3><p>{description}</p><a className="agro-link" href={href}>Explore capability →</a></article>)}</div>
+        </section>
+        <section id="how-it-works">
+          <div className="agro-section-heading"><div><span className="agro-eyebrow">A thoughtful foundation</span><h2>Technology that respects the farmer.</h2></div></div>
+          <div className="agro-notice"><div><h3>Start with a signal. End with a decision.</h3><p>AgroMind is an assistant, not a replacement for local expertise. Review recommendations against field conditions and trusted professionals.</p></div><a className="agro-button primary" href="https://github.com/ashikbro/AgroMind">See implementation ↗</a></div>
+        </section>
+      </main>
+      <footer className="agro-footer">AgroMind · AI-powered agricultural decision support · Demo showcase</footer>
     </div>
-  );
-};
-
-export default App;
+  )
+}
